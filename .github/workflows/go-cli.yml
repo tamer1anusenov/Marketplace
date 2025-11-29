@@ -2,9 +2,7 @@ name: GO-CI
 
 on:
   push:
-    branches:
-      - main
-      - dev
+    branches: [ "main", "dev" ]
   pull_request:
 
 jobs:
@@ -22,6 +20,17 @@ jobs:
 
       - name: Install dependencies
         run: go mod tidy
+
+      - name: Run go vet
+        run: go vet ./...
+
+      - name: Install golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59
+
+      - name: Run golangci-lint
+        run: golangci-lint run ./...
 
       - name: Run tests
         run: go test ./... -v
