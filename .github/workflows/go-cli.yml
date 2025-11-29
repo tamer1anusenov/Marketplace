@@ -1,7 +1,11 @@
-name: <имя воркфлоу>
+name: GO-CI
 
 on:
-  <push и/или pull_request>
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
 
 jobs:
   build-and-test:
@@ -9,12 +13,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@<версия>
+        uses: actions/checkout@v4
 
       - name: Setup Go
-        uses: actions/setup-go@<версия>
+        uses: actions/setup-go@v5
         with:
-          go-version: go1.22.2 linux/amd64
+          go-version: '1.22'
+
+      - name: Install dependencies
+        run: go mod tidy
 
       - name: Run tests
-        run: go test ./...
+        run: go test ./... -v
