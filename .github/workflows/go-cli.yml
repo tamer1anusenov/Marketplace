@@ -1,0 +1,20 @@
+name: <имя воркфлоу>
+
+on:
+  <push и/или pull_request>
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@<версия>
+
+      - name: Setup Go
+        uses: actions/setup-go@<версия>
+        with:
+          go-version: go1.22.2 linux/amd64
+
+      - name: Run tests
+        run: go test ./...
